@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
-import {avatar} from './Avatar';
 import SearchBox from './SearchBox';
 import CardList from './CardList';
+import './App.css';
 
 class App extends Component {
     constructor() {
         super()
         this.state = {
-            avatar : avatar,
+            avatar : [],
             searchField : ''
         }
+    }
+
+    componentDidMount() {
+        fetch(`https://jsonplaceholder.typicode.com/users`)
+        .then(res =>res.json())
+        .then(user => this.setState({avatar: user}))
     }
 
     onSearchChange = (event) => {

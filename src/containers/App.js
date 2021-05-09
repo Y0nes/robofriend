@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import SearchBox from './SearchBox';
-import CardList from './CardList';
+import SearchBox from '../components/SearchBox';
+import CardList from '../components/CardList';
+import Scroll from '../components/Scroll';
+import ErrorBoundry from '../components/ErrorBoundry';
 import './App.css';
 
 class App extends Component {
@@ -28,13 +30,18 @@ class App extends Component {
             return user.name.toLowerCase().includes(searchField.toLowerCase())
         });
 
-        return (
+
+
+        return !avatar.length?<h1>Loading</h1> :
+        (
             <div className='tc'>
                 <h1 className= 'f1'>Friendo Avatar</h1>
                 <SearchBox searchChange = {this.onSearchChange} />
-                <scroll>
-                 <CardList avatar={filtredAvatar}/>
-                </scroll>
+                <Scroll>
+                    <ErrorBoundry >
+                        <CardList avatar={filtredAvatar}/>
+                    </ErrorBoundry>    
+                </Scroll>
             </div>
         );
     }

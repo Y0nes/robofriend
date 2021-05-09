@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import {avatar} from './Avatar';
+import SearchBox from './SearchBox';
+import CardList from './CardList';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+    constructor() {
+        super()
+        this.state = {
+            avatar : avatar,
+            searchField : ''
+        }
+    }
+
+    onSearchChange = (event) => {
+        this.setState({ searchField: event.target.value })
+    }
+
+    render(){
+        const {avatar , searchField} = this.state;
+         const filtredAvatar = avatar.filter(user => {
+            return user.name.toLowerCase().includes(searchField.toLowerCase())
+        });
+
+        return (
+            <div className='tc'>
+                <h1 className= 'f1'>Friendo Avatar</h1>
+                <SearchBox searchChange = {this.onSearchChange} />
+                <scroll>
+                 <CardList avatar={filtredAvatar}/>
+                </scroll>
+            </div>
+        );
+    }
+
 }
-
 export default App;
